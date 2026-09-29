@@ -291,7 +291,7 @@ export default function SpatialGrid({
       suspectArchitect: "Dimas Putra Perdana",
       category: "Full-Stack",
       tags: ["Laravel 11", "Tailwind CSS", "Alpine.js", "Warehouse ERP"],
-      clues: ["Laravel 11", "Warehouse System", "Machining & Fab"],
+      clues: ["Laravel 11", "Warehouse System", "Machining & Fabrication"],
       status: "SOLVED",
       rotationDeg: 2.8,
       sectionType: "client",
