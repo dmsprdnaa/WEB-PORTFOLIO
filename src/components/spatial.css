@@ -4604,23 +4604,149 @@
     border-radius: 20px;
   }
 
+  .onboarding-memo-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   .dossier-identity-row {
     flex-direction: column;
     gap: 14px;
   }
 
+  /* Mugshot Card - Responsive Mobile */
   .dossier-mugshot-card {
     width: 100%;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
-    padding: 10px;
+    gap: 14px;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .mugshot-metal-clip {
+    left: 64px;
+    top: -8px;
+    width: 24px;
+    height: 16px;
+  }
+
+  .mugshot-card-header {
+    width: auto;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .mugshot-img-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    flex-shrink: 0;
   }
 
   .mugshot-img {
-    width: 70px;
-    height: 70px;
+    width: 100%;
+    height: 100%;
     margin-top: 0;
+    object-fit: cover;
+  }
+
+  .mugshot-role-stamp {
+    font-size: 0.68rem;
+    letter-spacing: 0.6px;
+    text-align: left;
+    flex: 1;
+  }
+
+  /* Interactive Agent ID Card - Responsive Mobile */
+  .dossier-agent-id-card {
+    width: 100%;
+    padding: 12px 14px;
+    box-sizing: border-box;
+  }
+
+  .id-card-top-tape {
+    font-size: 0.58rem;
+    letter-spacing: 0.5px;
+    padding-bottom: 5px;
+  }
+
+  .id-barcode-micro {
+    letter-spacing: -1.2px;
+  }
+
+  .id-card-body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+    overflow: hidden;
+  }
+
+  .id-card-avatar-outer {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .id-card-avatar-wrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  .id-active-beacon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .id-card-fields {
+    flex: 1;
+    min-width: 0;
+    gap: 2.5px;
+  }
+
+  .id-field-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .id-key {
+    width: 40px;
+    font-size: 0.58rem;
+    flex-shrink: 0;
+  }
+
+  .id-val {
+    font-size: clamp(0.62rem, 2.7vw, 0.72rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.35;
+  }
+
+  .id-card-thumb-stamp {
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+    opacity: 0.16;
+    pointer-events: none;
+    transform: rotate(-10deg);
+  }
+
+  .id-card-thumb-stamp svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  .pick-id-card-prompt {
+    align-self: flex-start;
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    margin-top: 4px;
   }
 
   .dossier-actions-row {
