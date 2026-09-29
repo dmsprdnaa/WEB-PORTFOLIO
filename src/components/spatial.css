@@ -1693,6 +1693,18 @@
   transform: translateY(-2px);
 }
 
+.cream-action-btn.mobile {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #ffffff;
+  border: none;
+}
+
+.cream-action-btn.mobile:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+
 /* (folder-modal-close-btn now styled inside folder-title-row below) */
 
 /* Area Isi Konten di Dalam Lembaran Folder */

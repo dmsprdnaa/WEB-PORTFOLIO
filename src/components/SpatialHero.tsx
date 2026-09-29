@@ -20,6 +20,7 @@ export interface ProjectItem {
   image: string;
   liveUrl?: string;
   githubUrl?: string;
+  mobileUrl?: string;
   caseNumber?: string;
   suspectArchitect?: string;
   clues?: string[];

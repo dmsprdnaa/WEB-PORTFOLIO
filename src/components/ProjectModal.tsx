@@ -68,6 +68,19 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </a>
           )}
 
+          {project.mobileUrl && (
+            <a
+              href={project.mobileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cream-action-btn mobile"
+              title="Buka Demo Mobile App"
+            >
+              <span style={{ fontSize: "11px", lineHeight: 1 }}>📱</span>
+              <span>Mobile App</span>
+            </a>
+          )}
+
           {project.githubUrl && (
             <a
               href={project.githubUrl}

@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BidLytics Pro - Vendor Mobile App Simulator</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons (Exact icons from original Ionic project) -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Tailwind CSS CDN for presentation layout -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #0b0f19;
+      color: #f8fafc;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(30, 58, 138, 0.05) 50%, transparent 70%);
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -20%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ════════════════════════════════════════════════════
+       SMARTPHONE FRAME (iPhone 16 Pro Style)
+       ════════════════════════════════════════════════════ */
+    .phone-mockup-wrapper {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 10px;
+    }
+
+    .phone-device {
+      width: 395px;
+      height: 820px;
+      background: #111827;
+      border-radius: 54px;
+      padding: 12px;
+      position: relative;
+      box-shadow: 
+        0 0 0 4px #2b3342,
+        0 0 0 8px #181f2a,
+        0 30px 80px -15px rgba(0, 0, 0, 0.9),
+        0 15px 35px -5px rgba(37, 99, 235, 0.25);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    /* Hardware Buttons */
+    .phone-device::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 140px;
+      width: 4px;
+      height: 38px;
+      background: #374151;
+      border-radius: 4px 0 0 4px;
+      box-shadow: 0 50px 0 #374151, 0 100px 0 #374151;
+    }
+    .phone-device::after {
+      content: '';
+      position: absolute;
+      right: -12px;
+      top: 170px;
+      width: 4px;
+      height: 65px;
+      background: #374151;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Inner Screen Screenport */
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #f4f6f9;
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 115px;
+      height: 28px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .di-camera {
+      width: 11px;
+      height: 11px;
+      background: #111827;
+      border-radius: 50%;
+      border: 1px solid #1f2937;
+    }
+    .di-sensor {
+      width: 9px;
+      height: 9px;
+      background: #0f172a;
+      border-radius: 50%;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      height: 44px;
+      padding: 10px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 90;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      color: white;
+      transition: color 0.3s ease;
+    }
+    .status-bar.dark-text {
+      color: #1e293b;
+    }
+
+    /* Screen Views Scroll Container */
+    .screen-container {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 70px;
+    }
+    .screen-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Individual View Containers */
+    .view-screen {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .view-screen.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Home Indicator Pill */
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 4px;
+      background: #94a3b8;
+      border-radius: 10px;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    /* ════════════════════════════════════════════════════
+       IONIC APP EXACT STYLES (from source code)
+       ════════════════════════════════════════════════════ */
+
+    /* ─── 1. Login View ─── */
+    .login-content {
+      background: #f4f6f9;
+      min-height: 100%;
+    }
+    .header-curve {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      height: 240px;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding-top: 30px;
+    }
+    .main-logo {
+      font-size: 50px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+      display: inline-block;
+    }
+    .logo-container h1 {
+      font-weight: 800;
+      font-size: 24px;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+    .logo-container p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .login-card {
+      margin: -45px 16px 20px;
+      background: white;
+      border-radius: 24px;
+      padding: 26px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 10;
+    }
+    .welcome-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0 0 5px 0;
+    }
+    .subtitle {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+    .web-form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .web-form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    .input-with-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-with-icon ion-icon {
+      position: absolute;
+      left: 14px;
+      color: #94a3b8;
+      font-size: 19px;
+    }
+    .input-with-icon input {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .input-with-icon input:focus {
+      background: #ffffff;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .forgot-password {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .forgot-password a {
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .web-btn-primary {
+      width: 100%;
+      padding: 13px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .web-btn-primary:active {
+      transform: scale(0.98);
+      background: #1d4ed8;
+    }
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .register-link a {
+      color: #2563eb;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ─── 2. Tenders Feed View ─── */
+    .tenders-content {
+      background: #f1f5f9;
+      min-height: 100%;
+    }
+    .header-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      padding: 50px 18px 24px;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+      position: relative;
+    }
+    .user-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .greeting p {
+      color: #bfdbfe;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .greeting h2 {
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      margin: 3px 0 0;
+    }
+    .avatar-mini {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+    .avatar-mini ion-icon {
+      color: white;
+      font-size: 22px;
+    }
+    .badge-dot {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      background: #ef4444;
+      border-radius: 8px;
+      border: 2px solid #fff;
+      color: white;
+      font-size: 9px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 14px;
+      padding: 10px 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    .search-box ion-icon {
+      color: #94a3b8;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    .search-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      color: #1e293b;
+      outline: none;
+    }
+
+    /* Completeness Banner */
+    .completeness-banner {
+      background: white;
+      margin: 14px 14px 0;
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border: 1px solid #f1f5f9;
+    }
+    .completeness-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .completeness-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+    }
+    .completeness-percent {
+      font-size: 12px;
+      font-weight: 800;
+      color: #2563eb;
+    }
+    .progress-track {
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    .completeness-hint {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 14px;
+    }
+    .stat-card {
+      background: white;
+      padding: 16px;
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      border: 1px solid #f8fafc;
+    }
+    .stat-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+    }
+    .stat-card p {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      margin: 4px 0 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .icon-bg {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .icon-bg.primary { background: #eff6ff; color: #2563eb; }
+    .icon-bg.warning { background: #fefce8; color: #ca8a04; }
+
+    /* Filter Pills */
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      padding: 0 14px 10px;
+      overflow-x: auto;
+    }
+    .pill {
+      padding: 6px 14px;
+      background: white;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .pill.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Tender Card */
+    .tenders-list {
+      padding: 0 14px;
+    }
+    .section-title h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1e293b;
+      margin: 10px 0 12px;
+    }
+    .premium-tender-card {
+      background: white;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      border: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .premium-tender-card:active {
+      transform: scale(0.98);
+    }
+    .ptc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .status-badge.bidding { background: #fef9c3; color: #ca8a04; }
+    .status-badge.won { background: #dcfce7; color: #16a34a; }
+    .status-badge.closed { background: #f1f5f9; color: #64748b; }
+    .date-chip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .ptc-body h2 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #1e293b;
+      margin: 0 0 10px;
+      line-height: 1.35;
+    }
+    .budget-box {
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #f1f5f9;
+    }
+    .budget-box .label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .budget-box .amount {
+      font-size: 16px;
+      font-weight: 800;
+      color: #020617;
+      margin-top: 2px;
+    }
+    .ptc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 10px;
+    }
+    .bidders {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ─── 3. Tender Detail View ─── */
+    .detail-nav {
+      background: #2563eb;
+      padding: 48px 16px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+    .detail-nav button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .detail-nav h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: white;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .detail-card {
+      background: white;
+      margin: 14px;
+      border-radius: 20px;
+      padding: 20px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      border: 1px solid #f1f5f9;
+    }
+    .tender-desc {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 8px 0 16px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 14px;
+    }
+    .info-item .label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      display: block;
+    }
+    .info-item .value {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .specs-card {
+      background: white;
+      margin: 0 14px 14px;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    .specs-card h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .spec-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 12px;
+      color: #334155;
+      font-weight: 600;
+    }
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+    .spec-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2563eb;
+    }
+    .submit-bid-box {
+      margin: 14px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      border-radius: 20px;
+      padding: 18px;
+      color: white;
+      text-align: center;
+    }
+    .submit-bid-box h4 {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .submit-bid-box p {
+      font-size: 11px;
+      color: #bfdbfe;
+      margin-bottom: 14px;
+    }
+    .bid-btn {
+      width: 100%;
+      padding: 12px;
+      background: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+    }
+
+    /* ─── 4. Profile View ─── */
+    .profile-content {
+      background: #f1f5f9;
+      min-height: 100%;
+    }
+    .profile-header-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      height: 160px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      padding-top: 45px;
+      text-align: center;
+      color: white;
+    }
+    .profile-card {
+      position: relative;
+      z-index: 10;
+      background: white;
+      margin: -60px 14px 14px;
+      border-radius: 24px;
+      padding: 45px 16px 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+    .avatar-ring {
+      position: absolute;
+      top: -38px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f1f5f9;
+      padding: 6px;
+      border-radius: 50%;
+    }
+    .avatar {
+      background: linear-gradient(to right, #2563eb, #3b82f6);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+    }
+    .vendor-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+    }
+    .vendor-email {
+      color: #64748b;
+      font-size: 12px;
+      margin: 2px 0 14px;
+    }
+    .verification-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .verification-box ion-icon {
+      font-size: 26px;
+      color: #10b981;
+    }
+    .verification-box h4 {
+      font-size: 12px;
+      font-weight: 800;
+      color: #065f46;
+      margin: 0;
+    }
+    .verification-box p {
+      font-size: 10px;
+      color: #047857;
+      margin: 2px 0 0;
+    }
+    .docs-section {
+      padding: 0 14px;
+    }
+    .docs-section h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .doc-item {
+      background: white;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #f1f5f9;
+    }
+    .doc-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .doc-icon-wrap {
+      width: 36px;
+      height: 36px;
+      background: #eff6ff;
+      color: #2563eb;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .doc-info h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+    .doc-info p {
+      font-size: 10px;
+      color: #64748b;
+      margin: 1px 0 0;
+    }
+    .doc-verified-badge {
+      font-size: 18px;
+      color: #10b981;
+    }
+    .logout-btn-wrap {
+      padding: 14px;
+    }
+    .btn-logout {
+      width: 100%;
+      padding: 12px;
+      background: #fee2e2;
+      color: #ef4444;
+      border: 1px solid #fecaca;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ─── 5. Tab Bar Navigation ─── */
+    .premium-tab-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 80;
+    }
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: #94a3b8;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .tab-btn.active {
+      color: #2563eb;
+    }
+    .tab-btn ion-icon {
+      font-size: 22px;
+    }
+    .tab-btn span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* ─── Notification Modal ─── */
+    .notif-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 150;
+      display: none;
+      align-items: flex-end;
+    }
+    .notif-modal-overlay.open {
+      display: flex;
+    }
+    .notif-modal-content {
+      width: 100%;
+      background: white;
+      border-radius: 28px 28px 0 0;
+      padding: 20px 18px 30px;
+      max-height: 80%;
+      overflow-y: auto;
+      animation: slideUp 0.25s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .notif-header h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .notif-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: #f8fafc;
+      margin-bottom: 8px;
+    }
+    .notif-item-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .notif-item-body h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+    .notif-item-body p {
+      font-size: 11px;
+      color: #64748b;
+      margin: 2px 0 4px;
+      line-height: 1.3;
+    }
+    .notif-item-time {
+      font-size: 9px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    /* ════════════════════════════════════════════════════
+       RESPONSIVE BEHAVIOR (Mobile Fullscreen)
+       ════════════════════════════════════════════════════ */
+    @media (max-width: 640px) {
+      body {
+        background: #f4f6f9;
+      }
+      .ambient-glow, .desktop-controls, .desktop-header {
+        display: none !important;
+      }
+      .phone-mockup-wrapper {
+        padding: 0;
+      }
+      .phone-device {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+      .phone-device::before, .phone-device::after {
+        display: none;
+      }
+      .phone-screen {
+        border-radius: 0;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center p-0 sm:p-6 relative">
+
+  <div class="ambient-glow"></div>
+
+  <!-- Desktop Presentation Header -->
+  <header class="desktop-header text-center mb-6 z-20 max-w-2xl px-4 hidden sm:block">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
+      <ion-icon name="phone-portrait-outline" class="text-sm"></ion-icon>
+      Ionic 8 + Angular Mobile Demo
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+      BidLytics Pro: <span class="text-blue-500">Vendor Mobile App</span>
+    </h1>
+    <p class="text-xs sm:text-sm text-slate-400 mt-1">
+      Simulasi interaktif aplikasi mobile vendor. Silakan klik tab bar, kartu tender, atau tombol navigasi di dalam frame HP.
+    </p>
+
+    <!-- Cross-platform Switcher Badge -->
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+      <a href="../login.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-bold transition-all shadow-sm">
+        <ion-icon name="desktop-outline" class="text-base text-blue-400"></ion-icon>
+        Buka Web Admin Portal (Laravel) &rarr;
+      </a>
+      <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 text-xs font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Interactive Live Simulator
+      </div>
+    </div>
+  </header>
+
+  <!-- Smartphone Mockup Wrapper -->
+  <main class="phone-mockup-wrapper">
+    <div class="phone-device">
+
+      <!-- Dynamic Island -->
+      <div class="dynamic-island">
+        <div class="di-camera"></div>
+        <div class="di-sensor"></div>
+      </div>
+
+      <!-- Inner Screen Container -->
+      <div class="phone-screen" id="phoneScreen">
+
+        <!-- Status Bar -->
+        <div class="status-bar" id="statusBar">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5 text-xs">
+            <ion-icon name="cellular"></ion-icon>
+            <ion-icon name="wifi"></ion-icon>
+            <ion-icon name="battery-full"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Scrollable Screen Content -->
+        <div class="screen-container" id="screenContainer">
+
+          <!-- ══════════════════════════════════════════════
+               SCREEN 1: LOGIN PAGE
+               ══════════════════════════════════════════════ -->
+          <div class="view-screen active" id="viewLogin">
+            <div class="login-content">
+              <div class="header-curve">
+                <div class="logo-container">
+                  <ion-icon name="business-outline" class="main-logo"></ion-icon>
+                  <h1>BidLytics Pro</h1>
+                  <p>Vendor Portal</p>
+                </div>
+              </div>
+
+              <div class="login-card">
+                <h2 class="welcome-text">Welcome Vendor</h2>
+                <p class="subtitle">Log in to view active tenders and submit your bids.</p>
+
+                <div class="form-container">
+                  <div class="web-form-group">
+                    <label>Email Address</label>
+                    <div class="input-with-icon">
+                      <ion-icon name="mail-outline"></ion-icon>
+                      <input type="email" value="vendor@elektronik.co.id" placeholder="admin@perusahaan.com">
+                    </div>
+                  </div>
+
+                  <div class="web-form-group">
+                    <label>Password</label>
+                    <div class="input-with-icon">
+                      <ion-icon name="lock-closed-outline"></ion-icon>
+                      <input type="password" value="••••••••" placeholder="Password">
+                    </div>
+                  </div>
+
+                  <div class="forgot-password">
+                    <a onclick="alert('Demo Mode: Fitur reset password disimulasikan.')">Forgot password?</a>
+                  </div>
+
+                  <button class="web-btn-primary" onclick="navigateTo('tenders')">
+                    Log In to Portal (1-Click)
+                  </button>
+                </div>
+
+                <div class="register-link">
+                  Don't have an account? <a onclick="alert('Demo Mode: Pendaftaran vendor disetujui lewat Web Admin.')">Register here</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════════
+               SCREEN 2: ACTIVE TENDERS FEED
+               ══════════════════════════════════════════════ -->
+          <div class="view-screen" id="viewTenders">
+            <div class="tenders-content">
+              <!-- Hero Header -->
+              <div class="header-hero">
+                <div class="user-info">
+                  <div class="greeting">
+                    <p>Welcome back,</p>
+                    <h2>PT. ELEKTRONIKA MEGAH &#x1F680;</h2>
+                  </div>
+                  <div class="avatar-mini" onclick="toggleNotifications()">
+                    <ion-icon name="notifications-outline"></ion-icon>
+                    <div class="badge-dot">2</div>
+                  </div>
+                </div>
+
+                <div class="search-box">
+                  <ion-icon name="search-outline"></ion-icon>
+                  <input type="text" placeholder="Search procurement events...">
+                </div>
+              </div>
+
+              <!-- Profile Completeness Banner -->
+              <div class="completeness-banner">
+                <div class="completeness-header">
+                  <span class="completeness-label">Profile Completeness</span>
+                  <span class="completeness-percent">85%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-bar" style="width: 85%"></div>
+                </div>
+                <p class="completeness-hint">
+                  <ion-icon name="information-circle-outline"></ion-icon> 
+                  Dokumen legalitas vendor terverifikasi oleh Admin.
+                </p>
+              </div>
+
+              <!-- Status Dashboard -->
+              <div class="stats-row">
+                <div class="stat-card">
+                  <h3>12</h3>
+                  <p>Total Events</p>
+                  <div class="icon-bg primary"><ion-icon name="cube"></ion-icon></div>
+                </div>
+                <div class="stat-card">
+                  <h3>4</h3>
+                  <p>Open Bidding</p>
+                  <div class="icon-bg warning"><ion-icon name="timer"></ion-icon></div>
+                </div>
+              </div>
+
+              <!-- Filter Pills -->
+              <div class="filter-pills">
+                <div class="pill active">All Events</div>
+                <div class="pill">Bidding</div>
+                <div class="pill">Won Projects</div>
+              </div>
+
+              <!-- Tender Cards List -->
+              <div class="tenders-list">
+                <div class="section-title">
+                  <h3>Procurement Events</h3>
+                </div>
+
+                <!-- Tender 1: Main Project -->
+                <div class="premium-tender-card" onclick="navigateTo('detail')">
+                  <div class="ptc-header">
+                    <div class="status-badge bidding">
+                      <ion-icon name="flash"></ion-icon>
+                      BIDDING
+                    </div>
+                    <div class="date-chip">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      15 Jul
+                    </div>
+                  </div>
+                  <div class="ptc-body">
+                    <h2>Pengadaan Komputer Untuk Design Grafis</h2>
+                    <div class="budget-box">
+                      <p class="label">Estimated Budget</p>
+                      <p class="amount">Rp 150.000.000</p>
+                    </div>
+                  </div>
+                  <div class="ptc-footer">
+                    <div class="bidders">
+                      <ion-icon name="people" class="text-blue-500"></ion-icon>
+                      <span>6 Bidders Aktif</span>
+                    </div>
+                    <button class="action-btn">
+                      Details <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tender 2 -->
+                <div class="premium-tender-card" onclick="navigateTo('detail')">
+                  <div class="ptc-header">
+                    <div class="status-badge bidding">
+                      <ion-icon name="flash"></ion-icon>
+                      BIDDING
+                    </div>
+                    <div class="date-chip">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      20 Jul
+                    </div>
+                  </div>
+                  <div class="ptc-body">
+                    <h2>Instalasi Jaringan Fiber Optic Kampus Utama</h2>
+                    <div class="budget-box">
+                      <p class="label">Estimated Budget</p>
+                      <p class="amount">Rp 280.000.000</p>
+                    </div>
+                  </div>
+                  <div class="ptc-footer">
+                    <div class="bidders">
+                      <ion-icon name="people" class="text-blue-500"></ion-icon>
+                      <span>4 Bidders Aktif</span>
+                    </div>
+                    <button class="action-btn">
+                      Details <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tender 3 -->
+                <div class="premium-tender-card">
+                  <div class="ptc-header">
+                    <div class="status-badge won">
+                      <ion-icon name="trophy"></ion-icon>
+                      WON PROJECT
+                    </div>
+                    <div class="date-chip">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      10 Jun
+                    </div>
+                  </div>
+                  <div class="ptc-body">
+                    <h2>Peremajaan Server Rack & Storage Enterprise</h2>
+                    <div class="budget-box">
+                      <p class="label">Winning Value</p>
+                      <p class="amount text-emerald-600">Rp 420.000.000</p>
+                    </div>
+                  </div>
+                  <div class="ptc-footer">
+                    <div class="bidders text-emerald-600 font-bold">
+                      <ion-icon name="checkmark-circle"></ion-icon>
+                      <span>PO Telah Diterbitkan</span>
+                    </div>
+                    <button class="action-btn">
+                      Result <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════════
+               SCREEN 3: TENDER DETAIL
+               ══════════════════════════════════════════════ -->
+          <div class="view-screen" id="viewDetail">
+            <div class="detail-content">
+              <!-- Top Navbar -->
+              <div class="detail-nav">
+                <button onclick="navigateTo('tenders')">
+                  <ion-icon name="arrow-back"></ion-icon>
+                </button>
+                <h3>Pengadaan Komputer Untuk Design</h3>
+              </div>
+
+              <!-- Main Detail Card -->
+              <div class="detail-card">
+                <div class="status-badge bidding">
+                  <ion-icon name="flash"></ion-icon> OPEN BIDDING
+                </div>
+                <h2 class="text-lg font-bold text-slate-800 leading-snug">Pengadaan Komputer Untuk Design Grafis</h2>
+                <p class="tender-desc">
+                  Pengadaan 15 unit PC Workstation spesifikasi tinggi untuk kebutuhan studio desain, rendering animasi 3D, dan pemodelan CAD arsitektur.
+                </p>
+
+                <div class="info-grid">
+                  <div class="info-item">
+                    <span class="label">Est. Budget</span>
+                    <span class="value text-blue-600">Rp 150.000.000</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">Bidding Start</span>
+                    <span class="value"><ion-icon name="calendar-outline"></ion-icon> 21 Jun 2026</span>
+                  </div>
+                  <div class="info-item" style="grid-column: span 2;">
+                    <span class="label">Deadline Penawaran</span>
+                    <span class="value text-rose-600"><ion-icon name="time-outline"></ion-icon> 15 Jul 2026, 23:59 WIB</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Specifications Card -->
+              <div class="specs-card">
+                <h3><ion-icon name="list-circle-outline" class="text-blue-600 text-lg"></ion-icon> Project Requirements</h3>
+                <div class="spec-item">
+                  <div class="spec-dot"></div>
+                  <span>15x Intel Core i9-14900K / 64GB DDR5 RAM</span>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-dot"></div>
+                  <span>NVIDIA RTX 4080 16GB Dedicated GPU</span>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-dot"></div>
+                  <span>Monitor 27-inch 4K Color Accurate IPS 99% DCI-P3</span>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-dot"></div>
+                  <span>Garansi Resmi Pabrikan Min. 3 Tahun On-site</span>
+                </div>
+              </div>
+
+              <!-- Bidding Action Box -->
+              <div class="submit-bid-box">
+                <h4>Siap Mengajukan Penawaran?</h4>
+                <p>Masukkan estimasi harga dan dokumen kelengkapan teknis penawaran Anda.</p>
+                <button class="bid-btn" onclick="alert('Penawaran Anda sebesar Rp 142.500.000 berhasil disimulasikan!')">
+                  Ajukan Penawaran Tender (Bid Now)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════════
+               SCREEN 4: PROFILE & LEGAL DOCS
+               ══════════════════════════════════════════════ -->
+          <div class="view-screen" id="viewProfile">
+            <div class="profile-content">
+              <div class="profile-header-bg">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-blue-200">Vendor Profile</h3>
+              </div>
+
+              <div class="profile-card">
+                <div class="avatar-ring">
+                  <div class="avatar">
+                    <ion-icon name="business"></ion-icon>
+                  </div>
+                </div>
+                <h2 class="vendor-name">PT. ELEKTRONIKA MEGAH</h2>
+                <p class="vendor-email">vendor@elektronik.co.id</p>
+
+                <!-- Verified Badge -->
+                <div class="verification-box">
+                  <ion-icon name="checkmark-circle"></ion-icon>
+                  <div>
+                    <h4>Verified Vendor</h4>
+                    <p>Akun resmi Anda telah diverifikasi oleh Tim Pengadaan</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Legal Documents List -->
+              <div class="docs-section">
+                <h3>Legal Documents</h3>
+                
+                <div class="doc-item">
+                  <div class="doc-left">
+                    <div class="doc-icon-wrap"><ion-icon name="shield-checkmark"></ion-icon></div>
+                    <div class="doc-info">
+                      <h4>Nomor Induk Berusaha (NIB)</h4>
+                      <p>NIB-912039129031 • Terverifikasi</p>
+                    </div>
+                  </div>
+                  <ion-icon name="checkmark-circle" class="doc-verified-badge"></ion-icon>
+                </div>
+
+                <div class="doc-item">
+                  <div class="doc-left">
+                    <div class="doc-icon-wrap"><ion-icon name="document-text"></ion-icon></div>
+                    <div class="doc-info">
+                      <h4>Surat Izin Usaha (SIUP)</h4>
+                      <p>SIUP/2026/0891-B • Terverifikasi</p>
+                    </div>
+                  </div>
+                  <ion-icon name="checkmark-circle" class="doc-verified-badge"></ion-icon>
+                </div>
+
+                <div class="doc-item">
+                  <div class="doc-left">
+                    <div class="doc-icon-wrap"><ion-icon name="card"></ion-icon></div>
+                    <div class="doc-info">
+                      <h4>NPWP Perusahaan</h4>
+                      <p>01.829.412.3-408.000 • Terverifikasi</p>
+                    </div>
+                  </div>
+                  <ion-icon name="checkmark-circle" class="doc-verified-badge"></ion-icon>
+                </div>
+              </div>
+
+              <!-- Logout Button -->
+              <div class="logout-btn-wrap">
+                <button class="btn-logout" onclick="navigateTo('login')">
+                  <ion-icon name="log-out-outline"></ion-icon>
+                  Log Out dari Aplikasi
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ══════════════════════════════════════════════
+             IN-APP BOTTOM TAB BAR
+             ══════════════════════════════════════════════ -->
+        <nav class="premium-tab-bar" id="appTabBar">
+          <button class="tab-btn active" id="tabBtnTenders" onclick="navigateTo('tenders')">
+            <ion-icon name="briefcase"></ion-icon>
+            <span>Active Tenders</span>
+          </button>
+          <button class="tab-btn" id="tabBtnProfile" onclick="navigateTo('profile')">
+            <ion-icon name="person-circle"></ion-icon>
+            <span>My Profile</span>
+          </button>
+        </nav>
+
+        <!-- Notification Bottom Sheet Modal -->
+        <div class="notif-modal-overlay" id="notifModal" onclick="toggleNotifications()">
+          <div class="notif-modal-content" onclick="event.stopPropagation()">
+            <div class="notif-header">
+              <h3>Notifications (2)</h3>
+              <button onclick="toggleNotifications()" class="text-slate-400 hover:text-slate-600 text-lg">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </div>
+            
+            <div class="notif-item">
+              <div class="notif-item-icon"><ion-icon name="ribbon"></ion-icon></div>
+              <div class="notif-item-body">
+                <h4>Selamat! Anda Memenangkan Tender</h4>
+                <p>Tender "Peremajaan Server Rack & Storage" telah disahkan untuk PT. ELEKTRONIKA MEGAH.</p>
+                <span class="notif-item-time">20 Menit yang lalu</span>
+              </div>
+            </div>
+
+            <div class="notif-item">
+              <div class="notif-item-icon"><ion-icon name="briefcase"></ion-icon></div>
+              <div class="notif-item-body">
+                <h4>Tender Baru Dibuka</h4>
+                <p>Pengadaan Komputer Untuk Design Grafis membuka masa pengajuan penawaran.</p>
+                <span class="notif-item-time">2 Jam yang lalu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Indicator Bar -->
+        <div class="home-indicator"></div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Screen Navigation Script -->
+  <script>
+    function navigateTo(screenName) {
+      // Hide all screens
+      const screens = ['login', 'tenders', 'detail', 'profile'];
+      screens.forEach(s => {
+        const el = document.getElementById('view' + s.charAt(0).toUpperCase() + s.slice(1));
+        if (el) el.classList.remove('active');
+      });
+
+      // Show targeted screen
+      const targetEl = document.getElementById('view' + screenName.charAt(0).toUpperCase() + screenName.slice(1));
+      if (targetEl) targetEl.classList.add('active');
+
+      // Scroll container to top
+      document.getElementById('screenContainer').scrollTop = 0;
+
+      // Handle Tab Bar & Status Bar visibility
+      const tabBar = document.getElementById('appTabBar');
+      const statusBar = document.getElementById('statusBar');
+
+      if (screenName === 'login') {
+        tabBar.style.display = 'none';
+        statusBar.classList.remove('dark-text');
+      } else {
+        tabBar.style.display = 'flex';
+        // Update active tab styling
+        document.getElementById('tabBtnTenders').classList.toggle('active', screenName === 'tenders' || screenName === 'detail');
+        document.getElementById('tabBtnProfile').classList.toggle('active', screenName === 'profile');
+      }
+    }
+
+    function toggleNotifications() {
+      const modal = document.getElementById('notifModal');
+      modal.classList.toggle('open');
+    }
+
+    // Default: start at Tenders Feed or Login
+    document.addEventListener('DOMContentLoaded', function() {
+      // If requested with ?screen=login or default
+      const params = new URLSearchParams(window.location.search);
+      const startScreen = params.get('screen') || 'login';
+      navigateTo(startScreen);
+    });
+  </script>
+
+</body>
+</html>
