@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>My Learning - Dashboard - NursePulse Academy</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        'background': '#F8F9FA',
+                        'surface-card-white': '#FFFFFF',
+                        'surface-container-lowest': '#FFFFFF',
+                        'surface-container-low': '#F3F4F6',
+                        'surface-container': '#E5E7EB',
+                        'surface-container-high': '#D1D5DB',
+                        'surface-bright': '#FFFFFF',
+                        'carbon-black': '#0F1417',
+                        'soft-gray': '#E2E8F0',
+                        'royal-purple': '#6045F4',
+                        'primary': '#6045F4',
+                        'primary-container': '#7C64F6',
+                        'primary-fixed': '#E8E5FE',
+                        'secondary': '#00877A',
+                        'neon-mint': '#53E6D4',
+                        'secondary-fixed': '#C6F8F2',
+                        'secondary-fixed-dim': '#53E6D4',
+                        'ce-credit-gold': '#F59E0B',
+                        'clinical-danger': '#EF4444',
+                        'error-container': '#FEE2E2',
+                        'on-surface': '#0F1417',
+                        'on-surface-variant': '#475569',
+                        'outline': '#94A3B8',
+                        'outline-variant': '#CBD5E1',
+                    },
+                    fontFamily: {
+                        'headline-lg': ['"Plus Jakarta Sans"', '"Manrope"', 'sans-serif'],
+                        'headline-md': ['"Plus Jakarta Sans"', '"Manrope"', 'sans-serif'],
+                        'headline-sm': ['"Plus Jakarta Sans"', '"Manrope"', 'sans-serif'],
+                        'title-md': ['"Plus Jakarta Sans"', '"Manrope"', 'sans-serif'],
+                        'body-md': ['"Source Sans 3"', '"Manrope"', 'sans-serif'],
+                        'body-sm': ['"Source Sans 3"', '"Manrope"', 'sans-serif'],
+                        'label-md': ['"Manrope"', 'sans-serif'],
+                        'label-caps': ['"Plus Jakarta Sans"', 'sans-serif'],
+                        'metric-digit': ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #CBD5E1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased">
+    <!-- Header / Top Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-surface-card-white/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(15,20,23,0.04)] border-b border-soft-gray">
+        <div class="h-20 w-full px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 max-w-[1440px] mx-auto">
+            <!-- Brand Logo & Sidebar Toggle Button -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="sidebarToggleBtn" onclick="toggleSidebar()" aria-label="Buka/Tutup Sidebar" type="button"
+                    class="p-2 -ml-2 rounded-xl text-carbon-black hover:text-royal-purple hover:bg-surface-container-low transition-colors focus:outline-none cursor-pointer flex items-center justify-center"
+                    title="Buka / Tutup Sidebar">
+                    <span class="material-symbols-outlined text-[24px]" id="sidebarToggleIcon">menu_open</span>
+                </button>
+                <a href="dashboard.html" class="flex items-center min-w-max">
+                    <img alt="NursePulse Academy Logo" class="h-11 w-auto object-contain" src="logo/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/180x45/6045f4/ffffff?text=NursePulse';">
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-xl mx-4 hidden md:block">
+                <div class="relative flex items-center w-full">
+                    <span class="material-symbols-outlined absolute left-3 text-outline pointer-events-none text-[20px]">search</span>
+                    <input id="globalSearchInput" onkeydown="if(event.key==='Enter') window.location='courses.html?search='+encodeURIComponent(this.value)"
+                        class="w-full h-10 pl-10 pr-4 rounded-lg bg-surface-container-low text-carbon-black placeholder:text-outline text-body-sm font-body-sm focus:outline-none focus:bg-surface-card-white shadow-[0_0_0_1px_rgba(15,20,23,0.08)] focus:shadow-[0_0_0_2px_#6045F4] transition-all"
+                        placeholder="Cari modul akreditasi, farmakologi, materi klinis..." type="text">
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="dashboard.html" class="transition-colors text-royal-purple font-label-md font-bold">
+                    My Learning
+                </a>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-3 min-w-max">
+                <!-- 90 Days Badge -->
+                <a href="schedule.html" class="hidden sm:flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full shadow-[0_0_0_1px_rgba(15,20,23,0.06)] hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined text-ce-credit-gold text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    <div class="flex flex-col">
+                        <span class="font-label-caps text-[11px] text-carbon-black font-bold leading-none">42/90 Hari</span>
+                        <span class="font-label-caps text-[9px] text-outline leading-tight">SIKLUS AKTIF</span>
+                    </div>
+                </a>
+
+                <!-- Notifications Dropdown -->
+                <div class="relative" id="notificationMenuContainer">
+                    <button id="notificationBellBtn" aria-label="Notifications" type="button" onclick="toggleNotificationsDropdown()"
+                        class="relative p-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors focus:outline-none cursor-pointer">
+                        <span class="material-symbols-outlined text-[22px]">notifications</span>
+                        <span id="notificationBadge" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-clinical-danger ring-2 ring-surface-card-white animate-pulse"></span>
+                    </button>
+
+                    <div id="notificationsDropdown" class="hidden absolute right-0 mt-2 w-80 sm:w-96 bg-surface-card-white rounded-2xl shadow-2xl border border-soft-gray py-0 z-50 overflow-hidden">
+                        <div class="p-4 border-b border-soft-gray flex items-center justify-between bg-surface-container-low/50">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-royal-purple text-[20px]">notifications_active</span>
+                                <h3 class="font-label-md text-sm font-bold text-carbon-black">Notifikasi Belajar</h3>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-royal-purple text-surface-card-white">3 Baru</span>
+                        </div>
+                        <div class="divide-y divide-soft-gray max-h-80 overflow-y-auto">
+                            <a href="schedule.html" class="flex items-start gap-3 p-3.5 hover:bg-surface-container-low transition-colors">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                                    <span class="material-symbols-outlined text-[18px]">verified</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-label-md text-xs font-bold text-carbon-black truncate">Aktivitas Belajar Hari Ini Tercatat</p>
+                                    <p class="text-xs text-on-surface-variant line-clamp-2">Hari ke-42 Anda telah terverifikasi. Terus pertahankan streak belajar klinis Anda!</p>
+                                </div>
+                            </a>
+                            <a href="course-detail.html" class="flex items-start gap-3 p-3.5 hover:bg-surface-container-low transition-colors">
+                                <div class="w-8 h-8 rounded-full bg-purple-100 text-royal-purple flex items-center justify-center shrink-0 mt-0.5">
+                                    <span class="material-symbols-outlined text-[18px]">lock_open</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-label-md text-xs font-bold text-carbon-black truncate">Kuesioner Modul Terbuka</p>
+                                    <p class="text-xs text-on-surface-variant line-clamp-2">Video modul Terapi Cairan tuntas 100%. Silakan kerjakan post-test evaluasi.</p>
+                                </div>
+                            </a>
+                            <a href="certificate.html" class="flex items-start gap-3 p-3.5 hover:bg-surface-container-low transition-colors">
+                                <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center shrink-0 mt-0.5">
+                                    <span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-label-md text-xs font-bold text-carbon-black truncate">Penerbitan Sertifikat SKP</p>
+                                    <p class="text-xs text-on-surface-variant line-clamp-2">Sertifikat resmi kelulusan siap dicetak begitu target 90 hari tercapai.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Profile Dropdown -->
+                <div class="relative" id="userMenuContainer">
+                    <button onclick="toggleUserDropdown()" class="flex items-center gap-2 pl-2 focus:outline-none cursor-pointer">
+                        <div class="w-9 h-9 rounded-full bg-primary-fixed text-royal-purple font-bold flex items-center justify-center text-xs overflow-hidden border border-royal-purple/30">
+                            NS
+                        </div>
+                        <div class="hidden lg:flex flex-col text-left">
+                            <span class="font-label-md text-xs text-carbon-black leading-tight font-bold">Demo</span>
+                            <span class="font-label-caps text-[10px] text-royal-purple font-semibold leading-tight uppercase">Demo Demo M.</span>
+                        </div>
+                        <span class="material-symbols-outlined text-outline text-[18px] hidden lg:block">expand_more</span>
+                    </button>
+
+                    <div id="userDropdown" class="hidden absolute right-0 mt-2 w-56 bg-surface-card-white rounded-2xl shadow-xl border border-soft-gray py-2 z-50">
+                        <div class="px-4 py-2 border-b border-soft-gray">
+                            <p class="font-label-md text-xs font-bold text-carbon-black">Demo</p>
+                            <p class="text-[11px] text-outline truncate">demo@nurse.id</p>
+                        </div>
+                        <a href="dashboard.html" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-carbon-black hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-[18px] text-royal-purple">dashboard</span> My Learning
+                        </a>
+                        <a href="courses.html" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-carbon-black hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-[18px] text-royal-purple">school</span> Explore Courses
+                        </a>
+                        <a href="schedule.html" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-carbon-black hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-[18px] text-royal-purple">calendar_month</span> Target 90 Hari
+                        </a>
+                        <a href="notes.html" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-carbon-black hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-[18px] text-royal-purple">edit_note</span> Catatan Belajar
+                        </a>
+                        <a href="profile.html" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-carbon-black hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-[18px] text-royal-purple">person</span> Profil Saya
+                        </a>
+                        <a href="certificate.html" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-carbon-black hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-[18px] text-ce-credit-gold">workspace_premium</span> Sertifikat Kelulusan
+                        </a>
+                        <div class="border-t border-soft-gray my-1"></div>
+                        <a href="login.html" class="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-clinical-danger hover:bg-error-container/30 transition-colors font-semibold">
+                            <span class="material-symbols-outlined text-[18px]">logout</span> Keluar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-carbon-black/40 backdrop-blur-xs z-30 hidden transition-opacity duration-300 md:hidden"></div>
+
+    <!-- Left Sidebar Navigation for Nurse Role -->
+    <aside id="nurseSidebar" class="fixed top-20 left-0 bottom-0 z-40 w-64 bg-surface-card-white border-r border-soft-gray shadow-[4px_0_16px_rgba(15,20,23,0.03)] flex flex-col transition-transform duration-300 ease-in-out">
+        <div class="px-4 py-3.5 flex items-center justify-between border-b border-soft-gray/60 bg-surface-container-low/30">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-royal-purple animate-pulse"></span>
+                <span class="font-label-caps text-[11px] font-bold text-outline uppercase tracking-wider">Portal Perawat</span>
+            </div>
+            <button type="button" onclick="toggleSidebar()" class="p-1 rounded-md text-outline hover:text-carbon-black hover:bg-surface-container-low transition-colors md:hidden" title="Tutup Sidebar">
+                <span class="material-symbols-outlined text-[18px]">left_panel_close</span>
+            </button>
+        </div>
+
+        <!-- 4 Main Nurse Menus -->
+        <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
+            <!-- 0. Dashboard -->
+            <a href="dashboard.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group bg-royal-purple text-surface-card-white shadow-md shadow-royal-purple/25 font-bold">
+                <span class="material-symbols-outlined text-[22px] text-surface-card-white transition-transform">dashboard</span>
+                <div class="flex-1 min-w-0">
+                    <span class="font-label-md text-sm block">My Learning</span>
+                    <span class="text-[10px] text-surface-card-white/80 block font-normal leading-tight">Dashboard Utama</span>
+                </div>
+                <span class="material-symbols-outlined text-[16px] text-neon-mint">arrow_right</span>
+            </a>
+
+            <!-- 1. Explore Course -->
+            <a href="courses.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group text-on-surface-variant hover:text-royal-purple hover:bg-surface-container-low font-medium">
+                <span class="material-symbols-outlined text-[22px] text-royal-purple group-hover:scale-110 transition-transform">school</span>
+                <div class="flex-1 min-w-0">
+                    <span class="font-label-md text-sm block">Explore Course</span>
+                    <span class="text-[10px] text-outline block font-normal leading-tight">Modul Pembelajaran</span>
+                </div>
+                
+            </a>
+
+            <!-- 2. Target 90 Hari -->
+            <a href="schedule.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group text-on-surface-variant hover:text-royal-purple hover:bg-surface-container-low font-medium">
+                <span class="material-symbols-outlined text-[22px] text-ce-credit-gold group-hover:scale-110 transition-transform">calendar_month</span>
+                <div class="flex-1 min-w-0">
+                    <span class="font-label-md text-sm block">Target 90 Hari</span>
+                    <span class="text-[10px] text-outline block font-normal leading-tight">Kalender &amp; Streak</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-container text-carbon-black">
+                    42/90
+                </span>
+            </a>
+
+            <!-- 3. Catatan Belajar Klinis -->
+            <a href="notes.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group text-on-surface-variant hover:text-royal-purple hover:bg-surface-container-low font-medium">
+                <span class="material-symbols-outlined text-[22px] text-royal-purple group-hover:scale-110 transition-transform">edit_note</span>
+                <div class="flex-1 min-w-0">
+                    <span class="font-label-md text-sm block">Catatan Belajar</span>
+                    <span class="text-[10px] text-outline block font-normal leading-tight">Resume Medis &amp; Dosis</span>
+                </div>
+                
+            </a>
+
+            <!-- 4. Profil Saya -->
+            <a href="profile.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group text-on-surface-variant hover:text-royal-purple hover:bg-surface-container-low font-medium">
+                <span class="material-symbols-outlined text-[22px] text-royal-purple group-hover:scale-110 transition-transform">person</span>
+                <div class="flex-1 min-w-0">
+                    <span class="font-label-md text-sm block">Profil Saya</span>
+                    <span class="text-[10px] text-outline block font-normal leading-tight">Data Diri &amp; STR</span>
+                </div>
+                <span class="material-symbols-outlined text-[16px] text-emerald-500" title="Profil Lengkap">verified</span>
+            </a>
+
+            <!-- 5. Sertifikat -->
+            <a href="certificate.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group text-on-surface-variant hover:text-royal-purple hover:bg-surface-container-low font-medium">
+                <span class="material-symbols-outlined text-[22px] text-ce-credit-gold group-hover:scale-110 transition-transform">workspace_premium</span>
+                <div class="flex-1 min-w-0">
+                    <span class="font-label-md text-sm block">Sertifikat Kelulusan</span>
+                    <span class="text-[10px] text-outline block font-normal leading-tight">Dokumen SKP Resmi</span>
+                </div>
+                
+            </a>
+        </nav>
+
+        <!-- Bottom Progress Card in Sidebar -->
+        <div class="p-4 border-t border-soft-gray bg-surface-container-low/40">
+            <div class="p-3 bg-surface-card-white rounded-xl border border-soft-gray shadow-xs">
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[11px] font-bold text-carbon-black flex items-center gap-1">
+                        <span class="material-symbols-outlined text-ce-credit-gold text-[16px]">workspace_premium</span>
+                        Target Kelulusan
+                    </span>
+                    <span class="text-[11px] font-bold text-royal-purple">47%</span>
+                </div>
+                <div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+                    <div class="bg-royal-purple h-full rounded-full transition-all duration-500" style="width: 47%"></div>
+                </div>
+                <p class="text-[10px] text-outline mt-1.5 flex items-center justify-between">
+                    <span>42 hari aktif</span>
+                    <span>Syarat: 90 hari</span>
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Canvas -->
+    <main id="mainContent" class="w-full pt-20 bg-background min-h-screen transition-all duration-300 ease-in-out md:pl-64">
+        
+
+        
+<div class="w-full px-4 sm:px-6 lg:px-8 py-6 max-w-[1440px] mx-auto space-y-8">
+    <!-- 1. Hero & 90-Day Master Banner -->
+    <section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-carbon-black via-[#1a1738] to-carbon-black text-surface-card-white shadow-xl">
+        <div class="absolute -right-16 -top-24 w-96 h-96 bg-royal-purple/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-1/3 -bottom-20 w-80 h-80 bg-neon-mint/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="relative p-6 sm:p-8 lg:p-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8">
+            <div class="flex-1 space-y-4 max-w-3xl">
+                <div class="flex flex-wrap items-center gap-3">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neon-mint text-carbon-black font-label-caps text-xs tracking-wider uppercase shadow-sm font-bold">
+                        <span class="material-symbols-outlined text-sm font-bold" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        Perawat Terverifikasi
+                    </span>
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-card-white/10 text-surface-bright font-label-caps text-xs backdrop-blur-md">
+                        <span class="w-1.5 h-1.5 rounded-full bg-neon-mint"></span>
+                        Target Kelulusan: 90 Hari Aktif Belajar
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neon-mint/20 text-neon-mint border border-neon-mint/30 font-label-caps text-xs font-bold">
+                        <span class="material-symbols-outlined text-xs">check_circle</span>
+                        Hari Ini Sudah Aktif
+                    </span>
+                </div>
+
+                <div class="space-y-1">
+                    <h1 class="font-headline-lg text-2xl sm:text-3xl lg:text-4xl tracking-tight text-surface-card-white font-extrabold">
+                        Selamat Datang Kembali, Demo
+                    </h1>
+                    <p class="font-body-md text-sm text-surface-container-high font-medium">
+                        Demo • Kurikulum Pelatihan Klinis Keperawatan Mandiri Berstandar Nasional
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                    <a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-royal-purple hover:bg-primary text-white font-label-md text-sm transition-all duration-200 shadow-lg shadow-royal-purple/30 font-bold" href="#modul-pembelajaran">
+                        <span class="material-symbols-outlined text-[18px]">play_circle</span>
+                        Lanjutkan Pembelajaran
+                    </a>
+                    <a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-surface-card-white/10 hover:bg-surface-card-white/20 text-white font-label-md text-sm backdrop-blur-sm transition-all duration-200" href="schedule.html">
+                        <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                        Jadwal &amp; Streak Belajar
+                    </a>
+                    <a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-neon-mint/20 hover:bg-neon-mint/30 text-neon-mint font-label-md text-sm transition-all duration-200 border border-neon-mint/30 font-bold" href="certificate.html">
+                        <span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+                        Lihat Sertifikat Kelulusan
+                    </a>
+                </div>
+            </div>
+
+            <!-- Gauge & 90 Days Progress Card (Right of Hero) -->
+            <div class="w-full xl:w-96 p-5 rounded-2xl bg-surface-card-white/5 backdrop-blur-md shadow-inner space-y-4 border border-surface-card-white/10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-ce-credit-gold text-[22px]">workspace_premium</span>
+                        <span class="font-title-md text-sm font-bold text-surface-card-white">Target 90 Hari Belajar</span>
+                    </div>
+                    <span class="font-metric-digit text-2xl text-neon-mint leading-none font-black">47%</span>
+                </div>
+                <div class="space-y-1.5">
+                    <div class="flex justify-between font-label-caps text-xs text-surface-container-high">
+                        <span>Akumulasi Kehadiran</span>
+                        <span class="text-surface-card-white font-bold">42 / 90 Hari Aktif</span>
+                    </div>
+                    <div class="w-full h-3 rounded-full bg-surface-card-white/10 overflow-hidden p-0.5">
+                        <div class="h-full bg-gradient-to-r from-royal-purple via-secondary to-neon-mint rounded-full transition-all duration-500" style="width: 47%"></div>
+                    </div>
+                </div>
+                <div class="pt-2 flex items-center justify-between text-xs text-surface-container-high">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px] text-neon-mint">local_fire_department</span>
+                        Streak: <strong class="text-surface-card-white font-bold">7 Hari Berturut-turut</strong>
+                    </span>
+                    <span class="text-neon-mint font-semibold">Sisa 48 Hari Target</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Quick Stat Strip (4 Metric Cards) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1 -->
+        <div class="p-5 rounded-2xl bg-surface-card-white shadow-sm flex items-center gap-4 transition-all duration-200 hover:shadow-md border border-soft-gray/80">
+            <div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-royal-purple shrink-0">
+                <span class="material-symbols-outlined text-[26px]">school</span>
+            </div>
+            <div>
+                <div class="font-metric-digit text-2xl text-carbon-black font-extrabold leading-tight">2 / 4</div>
+                <div class="text-xs text-on-surface-variant font-medium">Modul Video Tuntas</div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-5 rounded-2xl bg-surface-card-white shadow-sm flex items-center gap-4 transition-all duration-200 hover:shadow-md border border-soft-gray/80">
+            <div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary shrink-0">
+                <span class="material-symbols-outlined text-[26px]">play_circle</span>
+            </div>
+            <div>
+                <div class="font-metric-digit text-2xl text-carbon-black font-extrabold leading-tight">8 Video</div>
+                <div class="text-xs text-on-surface-variant font-medium">Video Telah Diselesaikan</div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-5 rounded-2xl bg-surface-card-white shadow-sm flex items-center gap-4 transition-all duration-200 hover:shadow-md border border-soft-gray/80">
+            <div class="w-12 h-12 rounded-xl bg-neon-mint/30 flex items-center justify-center text-secondary shrink-0">
+                <span class="material-symbols-outlined text-[26px]">quiz</span>
+            </div>
+            <div>
+                <div class="font-metric-digit text-2xl text-carbon-black font-extrabold leading-tight">2 / 4</div>
+                <div class="text-xs text-on-surface-variant font-medium">Kuisioner Evaluasi Lulus</div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-5 rounded-2xl bg-surface-card-white shadow-sm flex items-center gap-4 transition-all duration-200 hover:shadow-md border border-soft-gray/80">
+            <div class="w-12 h-12 rounded-xl bg-error-container flex items-center justify-center text-clinical-danger shrink-0">
+                <span class="material-symbols-outlined text-[26px]">local_fire_department</span>
+            </div>
+            <div>
+                <div class="flex items-center gap-1.5">
+                    <span class="font-metric-digit text-2xl text-carbon-black font-extrabold leading-tight">42 / 90</span>
+                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-neon-mint text-carbon-black">HARI</span>
+                </div>
+                <div class="text-xs text-on-surface-variant font-medium">Hari Aktif (Streak: 7 Hari)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Modul Pembelajaran Klinis -->
+    <section class="space-y-4" id="modul-pembelajaran">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+                <h2 class="font-headline-md text-xl sm:text-2xl font-bold text-carbon-black">Modul Pembelajaran Klinis</h2>
+                <p class="text-xs sm:text-sm text-on-surface-variant">
+                    Tonton seluruh materi video hingga 100% tuntas untuk membuka kuisioner evaluasi pemahaman klinis Anda.
+                </p>
+            </div>
+            <a class="text-royal-purple hover:underline font-label-md text-xs sm:text-sm font-bold flex items-center gap-1 w-fit" href="courses.html">
+                Lihat Semua Modul <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Course 1 -->
+            <div class="group flex flex-col justify-between rounded-2xl bg-surface-card-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-soft-gray">
+                <div>
+                    <div class="relative h-40 w-full overflow-hidden bg-gradient-to-tr from-carbon-black via-[#1a1738] to-carbon-black flex items-center justify-center">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Bantuan Hidup Dasar" src="cover course/cover.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&auto=format&fit=crop';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-carbon-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-3 right-3 bg-carbon-black/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs text-white flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-neon-mint text-[14px]">subscriptions</span>
+                            <span>4 Video</span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-neon-mint text-carbon-black font-bold">
+                                <span class="material-symbols-outlined text-[12px]">check_circle</span> Lulus Kuis (90)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-2">
+                        <span class="text-[10px] text-royal-purple uppercase tracking-wider font-bold">MODUL #1</span>
+                        <h3 class="font-headline-sm text-base font-bold text-carbon-black group-hover:text-royal-purple transition-colors line-clamp-2">
+                            Bantuan Hidup Dasar (BHD) &amp; RJP Dewasa
+                        </h3>
+                        <p class="text-xs text-on-surface-variant line-clamp-2">
+                            Pelatihan kompresi dada presisi, airway management, serta ventilasi resusitasi darurat.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 space-y-3">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-on-surface-variant">
+                            <span>Progress Video</span>
+                            <span class="font-bold text-carbon-black">100%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full bg-soft-gray overflow-hidden">
+                            <div class="h-full bg-neon-mint rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <a class="w-full py-2.5 px-4 rounded-xl bg-surface-container hover:bg-surface-container-high text-carbon-black text-xs flex items-center justify-center gap-2 transition-colors font-bold shadow-xs" href="course-detail.html">
+                        <span>Review Materi &amp; Evaluasi</span>
+                        <span class="material-symbols-outlined text-sm">assignment</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="group flex flex-col justify-between rounded-2xl bg-surface-card-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-soft-gray">
+                <div>
+                    <div class="relative h-40 w-full overflow-hidden bg-gradient-to-tr from-carbon-black via-[#1a1738] to-carbon-black flex items-center justify-center">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Terapi Cairan" src="cover course/cover.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-carbon-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-3 right-3 bg-carbon-black/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs text-white flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-neon-mint text-[14px]">subscriptions</span>
+                            <span>3 Video</span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-royal-purple text-white font-bold">
+                                <span class="material-symbols-outlined text-[12px]">lock_open</span> Kuisioner Terbuka
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-2">
+                        <span class="text-[10px] text-royal-purple uppercase tracking-wider font-bold">MODUL #2</span>
+                        <h3 class="font-headline-sm text-base font-bold text-carbon-black group-hover:text-royal-purple transition-colors line-clamp-2">
+                            Manajemen Terapi Cairan &amp; Elektrolit
+                        </h3>
+                        <p class="text-xs text-on-surface-variant line-clamp-2">
+                            Kalkulasi balance cairan, tetesan infus klinis, dan penanganan dehidrasi berat pasien kritis.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 space-y-3">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-on-surface-variant">
+                            <span>Progress Video</span>
+                            <span class="font-bold text-carbon-black">100%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full bg-soft-gray overflow-hidden">
+                            <div class="h-full bg-neon-mint rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <a class="w-full py-2.5 px-4 rounded-xl bg-royal-purple hover:bg-primary text-white text-xs flex items-center justify-center gap-2 transition-colors font-bold shadow-md shadow-royal-purple/20" href="course-detail.html">
+                        <span>Isi Kuisioner Modul</span>
+                        <span class="material-symbols-outlined text-sm">edit_note</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="group flex flex-col justify-between rounded-2xl bg-surface-card-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-soft-gray">
+                <div>
+                    <div class="relative h-40 w-full overflow-hidden bg-gradient-to-tr from-carbon-black via-[#1a1738] to-carbon-black flex items-center justify-center">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="PPI" src="cover course/cover.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&auto=format&fit=crop';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-carbon-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-3 right-3 bg-carbon-black/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs text-white flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-neon-mint text-[14px]">subscriptions</span>
+                            <span>4 Video</span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-carbon-black/70 text-surface-container-high font-medium">
+                                <span class="material-symbols-outlined text-[12px]">lock</span> Kuis Terkunci
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-2">
+                        <span class="text-[10px] text-royal-purple uppercase tracking-wider font-bold">MODUL #3</span>
+                        <h3 class="font-headline-sm text-base font-bold text-carbon-black group-hover:text-royal-purple transition-colors line-clamp-2">
+                            Pencegahan &amp; Pengendalian Infeksi (PPI)
+                        </h3>
+                        <p class="text-xs text-on-surface-variant line-clamp-2">
+                            SOP cuci tangan 6 langkah, APD isolasi droplet, dan penanganan limbah medis jarum suntik.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 space-y-3">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-on-surface-variant">
+                            <span>Progress Video</span>
+                            <span class="font-bold text-carbon-black">50%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full bg-soft-gray overflow-hidden">
+                            <div class="h-full bg-neon-mint rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    <a class="w-full py-2.5 px-4 rounded-xl bg-royal-purple hover:bg-primary text-white text-xs flex items-center justify-center gap-2 transition-colors font-bold shadow-md shadow-royal-purple/20" href="video-player.html">
+                        <span>Lanjutkan Nonton Video</span>
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="group flex flex-col justify-between rounded-2xl bg-surface-card-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-soft-gray">
+                <div>
+                    <div class="relative h-40 w-full overflow-hidden bg-gradient-to-tr from-carbon-black via-[#1a1738] to-carbon-black flex items-center justify-center">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="EKG Dasar" src="cover course/cover.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&auto=format&fit=crop';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-carbon-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-3 right-3 bg-carbon-black/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs text-white flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-neon-mint text-[14px]">subscriptions</span>
+                            <span>5 Video</span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-carbon-black/70 text-surface-container-high font-medium">
+                                <span class="material-symbols-outlined text-[12px]">lock</span> Kuis Terkunci
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-2">
+                        <span class="text-[10px] text-royal-purple uppercase tracking-wider font-bold">MODUL #4</span>
+                        <h3 class="font-headline-sm text-base font-bold text-carbon-black group-hover:text-royal-purple transition-colors line-clamp-2">
+                            EKG Dasar &amp; Interpretasi Aritmia
+                        </h3>
+                        <p class="text-xs text-on-surface-variant line-clamp-2">
+                            Membaca gelombang P-QRS-T, pengenalan STEMI, Atrial Fibrilasi, dan asistol emergensi.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 space-y-3">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-on-surface-variant">
+                            <span>Progress Video</span>
+                            <span class="font-bold text-carbon-black">0%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full bg-soft-gray overflow-hidden">
+                            <div class="h-full bg-neon-mint rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <a class="w-full py-2.5 px-4 rounded-xl bg-royal-purple hover:bg-primary text-white text-xs flex items-center justify-center gap-2 transition-colors font-bold shadow-md shadow-royal-purple/20" href="course-detail.html">
+                        <span>Mulai Belajar Modul</span>
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Kalender 90 Hari Aktif Belajar -->
+    <section class="rounded-2xl bg-surface-card-white p-6 shadow-sm space-y-6 border border-soft-gray">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-soft-gray">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-royal-purple text-[26px]">calendar_month</span>
+                    <h2 class="font-headline-md text-xl font-bold text-carbon-black">Kalender 90 Hari Aktif Belajar</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-on-surface-variant max-w-2xl">
+                    Sistem mengakumulasi setiap hari aktif belajar Anda (menonton video materi atau mengerjakan kuis). Hari absen tidak menggagalkan program, namun hanya hari aktif yang dihitung menuju kelulusan 90 hari.
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-carbon-black text-xs font-bold border border-soft-gray">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neon-mint"></span>
+                    42 / 90 Hari Aktif
+                </span>
+                <a href="schedule.html" class="inline-flex items-center gap-1 text-royal-purple hover:text-primary text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors">
+                    <span>Lihat Jadwal Lengkap</span>
+                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 90 Days Interactive Grid -->
+        <div>
+            <div class="grid grid-cols-10 sm:grid-cols-15 md:grid-cols-18 gap-1.5 sm:gap-2">
+                <!-- 90 Days Generator -->
+                
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-1: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">1</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-2: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">2</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-3: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">3</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-4: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">4</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-5: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">5</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-6: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">6</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-7: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">7</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-8: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">8</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-9: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">9</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-10: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">10</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-11: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">11</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-12: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">12</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-13: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">13</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-14: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">14</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-15: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">15</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-16: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">16</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-17: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">17</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-18: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">18</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-19: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">19</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-20: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">20</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-21: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">21</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-22: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">22</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-23: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">23</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-24: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">24</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-25: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">25</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-26: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">26</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-27: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">27</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-28: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">28</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-29: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">29</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-30: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">30</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-31: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">31</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-32: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">32</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-33: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">33</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-34: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">34</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-35: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">35</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-36: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">36</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-37: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">37</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-38: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">38</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-39: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">39</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-40: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">40</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold shadow-xs" title="Hari ke-41: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">41</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-neon-mint text-carbon-black font-bold ring-2 ring-carbon-black" title="Hari ke-42: Aktif Belajar">
+                        <span class="text-[11px] sm:text-xs leading-none">42</span>
+                        <span class="material-symbols-outlined text-[10px] leading-none text-carbon-black mt-0.5">check</span>
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-43: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">43</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-44: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">44</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-45: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">45</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-46: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">46</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-47: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">47</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-48: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">48</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-49: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">49</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-50: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">50</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-51: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">51</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-52: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">52</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-53: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">53</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-54: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">54</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-55: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">55</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-56: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">56</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-57: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">57</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-58: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">58</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-59: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">59</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-60: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">60</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-61: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">61</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-62: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">62</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-63: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">63</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-64: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">64</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-65: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">65</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-66: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">66</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-67: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">67</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-68: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">68</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-69: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">69</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-70: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">70</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-71: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">71</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-72: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">72</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-73: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">73</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-74: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">74</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-75: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">75</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-76: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">76</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-77: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">77</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-78: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">78</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-79: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">79</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-80: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">80</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-81: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">81</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-82: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">82</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-83: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">83</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-84: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">84</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-85: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">85</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-86: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">86</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-87: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">87</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-88: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">88</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-89: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">89</span>
+                        
+                    </div>
+                    <div class="aspect-square rounded-lg flex flex-col items-center justify-center text-xs font-semibold transition-all duration-150 relative cursor-pointer hover:scale-105 bg-surface-container-low text-outline/60" title="Hari ke-90: Mendatang">
+                        <span class="text-[11px] sm:text-xs leading-none">90</span>
+                        
+                    </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="mt-4 pt-4 border-t border-soft-gray flex flex-wrap items-center justify-between gap-4 text-xs text-on-surface-variant">
+                <div class="flex items-center gap-4 flex-wrap">
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded bg-neon-mint inline-block"></span>
+                        <span class="font-medium text-carbon-black">Hari Aktif Belajar (42)</span>
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded ring-2 ring-carbon-black bg-neon-mint inline-block"></span>
+                        <span class="font-medium text-carbon-black">Hari Ini</span>
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded bg-surface-container-high inline-block"></span>
+                        <span>Tidak Belajar (Absen)</span>
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded bg-surface-container-low border border-soft-gray inline-block"></span>
+                        <span>Hari Mendatang</span>
+                    </span>
+                </div>
+                <div class="text-xs text-outline font-medium">
+                    Target Tersisa: 48 Hari Menuju Sertifikat Kelulusan
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Panduan 4 Pilar Alur Belajar -->
+    <section class="space-y-4">
+        <div class="space-y-1">
+            <h2 class="font-headline-md text-xl font-bold text-carbon-black">Panduan Alur Program Belajar</h2>
+            <p class="text-xs sm:text-sm text-on-surface-variant">
+                Empat pilar utama penyelesaian program pelatihan NursePulse Academy hingga penerbitan sertifikat kelulusan resmi.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-surface-card-white border border-soft-gray shadow-xs space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-royal-purple font-bold text-sm">01</div>
+                <h4 class="font-title-md text-sm font-bold text-carbon-black flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-royal-purple text-base">video_library</span>
+                    Tonton Video 100%
+                </h4>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Tonton setiap video pembelajaran pada modul hingga selesai. Seluruh video wajib tuntas sebagai prasyarat membuka kuisioner.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-surface-card-white border border-soft-gray shadow-xs space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary font-bold text-sm">02</div>
+                <h4 class="font-title-md text-sm font-bold text-carbon-black flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-secondary text-base">quiz</span>
+                    Evaluasi &amp; Kuis
+                </h4>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Kerjakan kuisioner evaluasi pemahaman materi modul. Raih nilai di atas batas kelulusan (passing score 80%) untuk menuntaskan modul.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-surface-card-white border border-soft-gray shadow-xs space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-neon-mint/30 flex items-center justify-center text-secondary font-bold text-sm">03</div>
+                <h4 class="font-title-md text-sm font-bold text-carbon-black flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-secondary text-base">calendar_month</span>
+                    Akumulasi 90 Hari
+                </h4>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Lakukan aktivitas belajar minimal 90 hari secara akumulatif. Absen tidak mereset hari yang telah terkumpul sebelumnya.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-surface-card-white border border-soft-gray shadow-xs space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center text-clinical-danger font-bold text-sm">04</div>
+                <h4 class="font-title-md text-sm font-bold text-carbon-black flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-clinical-danger text-base">workspace_premium</span>
+                    Sertifikat Otomatis
+                </h4>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Tombol klaim sertifikat otomatis aktif begitu target 90 hari aktif belajar terpenuhi. Sertifikat dapat diunduh kapan saja.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Footer -->
+    <footer class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-xs text-outline border-t border-soft-gray/60 mt-12">
+        <p>© 2026 NursePulse Academy. Platform Pendidikan &amp; Akreditasi Keperawatan Klinis Mandiri Berkelanjutan.</p>
+    </footer>
+
+    </main>
+
+    <!-- Common Interactive JS Script -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('nurseSidebar');
+            const main = document.getElementById('mainContent');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            const icon = document.getElementById('sidebarToggleIcon');
+            
+            if (window.innerWidth < 768) {
+                // Mobile
+                const isOpen = !sidebar.classList.contains('-translate-x-full');
+                if (isOpen) {
+                    sidebar.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                } else {
+                    sidebar.classList.remove('-translate-x-full');
+                    backdrop.classList.remove('hidden');
+                }
+            } else {
+                // Desktop collapse
+                sidebar.classList.toggle('-translate-x-full');
+                main.classList.toggle('md:pl-0');
+                main.classList.toggle('md:pl-64');
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+            document.getElementById('notificationsDropdown')?.classList.add('hidden');
+        }
+
+        function toggleNotificationsDropdown() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            dropdown.classList.toggle('hidden');
+            document.getElementById('userDropdown')?.classList.add('hidden');
+        }
+
+        // Close dropdowns on outside click
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('#userMenuContainer')) {
+                document.getElementById('userDropdown')?.classList.add('hidden');
+            }
+            if (!e.target.closest('#notificationMenuContainer')) {
+                document.getElementById('notificationsDropdown')?.classList.add('hidden');
+            }
+        });
+
+        // Toast Helper
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const msgEl = document.getElementById('toastMessage');
+            const iconEl = document.getElementById('toastIcon');
+            if (!toast) return;
+
+            msgEl.textContent = message;
+            iconEl.textContent = type === 'success' ? 'check_circle' : 'info';
+            iconEl.className = 'material-symbols-outlined ' + (type === 'success' ? 'text-neon-mint' : 'text-ce-credit-gold');
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        // Initialize responsive sidebar state
+        if (window.innerWidth < 768) {
+            document.getElementById('nurseSidebar')?.classList.add('-translate-x-full');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+/* Navbar Component Styles */
+.comic-navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #faf7ee;
+  padding: 8px 16px 14px;
+}
+
+/* 1. Vintage Masthead Tape */
+.comic-masthead-tape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #11141A;
+  color: #FFDE00;
+  padding: 4px 14px;
+  border-radius: 4px 4px 0 0;
+  border: 2.5px solid #11141A;
+  border-bottom: none;
+  font-family: var(--font-comic);
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  gap: 12px;
+}
+
+.masthead-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.comic-code-badge {
+  background: #ffffff;
+  color: #11141A;
+  border: 1.5px solid #11141A;
+  padding: 2px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.85;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 0.45rem;
+  transform: rotate(-3deg);
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+
+.comic-issue-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  line-height: 1.1;
+}
+
+.issue-number {
+  color: #FFDE00;
+  font-family: var(--font-comic);
+  font-size: 0.9rem;
+  letter-spacing: 1.2px;
+}
+
+.issue-date {
+  color: #E2E8F0;
+  font-size: 0.65rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.comic-marquee-alert {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 450px;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .comic-marquee-alert {
+    display: block;
+  }
+}
+
+.marquee-content {
+  display: inline-block;
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  letter-spacing: 1.2px;
+}
+
+.comic-sfx-toggle {
+  background: #FF3344;
+  color: #FFFFFF;
+  border: 1.5px solid #FFFFFF;
+  border-radius: 4px;
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-comic);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.comic-sfx-toggle:hover {
+  transform: scale(1.05);
+  background: #ff5566;
+}
+
+/* 2. Main Comic Nav Bar */
+.comic-main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: var(--comic-border-thick);
+  box-shadow: var(--comic-shadow-lg);
+  border-radius: 6px;
+  padding: 10px 18px;
+  position: relative;
+}
+
+.tape-top-left {
+  top: -12px;
+  left: 30px;
+}
+
+.tape-top-right {
+  top: -12px;
+  right: 40px;
+  transform: rotate(8deg);
+}
+
+/* Logo styling */
+.comic-logo-group {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.logo-badge-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.logo-prefix {
+  font-family: var(--font-comic);
+  font-size: 1.8rem;
+  color: #FF3344;
+  -webkit-text-stroke: 1.5px #11141A;
+  transform: rotate(-3deg);
+}
+
+.logo-title {
+  font-family: var(--font-comic);
+  font-size: 2.1rem;
+  color: #FFDE00;
+  letter-spacing: 1.5px;
+  -webkit-text-stroke: 1.8px #11141A;
+  text-shadow: 3px 3px 0px #11141A;
+  transform: skewX(-5deg);
+}
+
+.logo-starburst {
+  position: absolute;
+  top: -12px;
+  right: -24px;
+  background: #FF3344;
+  color: #FFFFFF;
+  font-family: var(--font-comic);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border: 1.5px solid #11141A;
+  box-shadow: 2px 2px 0px #11141A;
+  border-radius: 3px;
+  transform: rotate(14deg);
+  animation: comic-pulse 1.8s infinite;
+}
+
+.logo-subtitle {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: #555E6D;
+  margin-top: -2px;
+}
+
+/* Nav links */
+.comic-nav-links {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 860px) {
+  .comic-nav-links {
+    display: flex;
+  }
+}
+
+.comic-tab-btn {
+  position: relative;
+  background: #FAF7EE;
+  border: 2.5px solid #11141A;
+  box-shadow: 3px 3px 0px #11141A;
+  padding: 8px 14px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.comic-tab-btn:hover {
+  transform: translateY(-3px) rotate(-1deg);
+  box-shadow: 4px 5px 0px #11141A;
+  background: #FFF066;
+}
+
+.comic-tab-btn.active {
+  background: #FFDE00;
+  border-color: #11141A;
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #FF3344;
+}
+
+.tab-chapter {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #FF3344;
+  line-height: 1;
+}
+
+.tab-name {
+  font-family: var(--font-comic);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  color: #11141A;
+  line-height: 1.1;
+}
+
+.comic-tab-hover-fx {
+  position: absolute;
+  top: -14px;
+  right: -8px;
+  background: #00F5D4;
+  color: #11141A;
+  font-family: var(--font-comic);
+  font-size: 0.7rem;
+  padding: 1px 5px;
+  border: 1.5px solid #11141A;
+  box-shadow: 1.5px 1.5px 0px #11141A;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform: rotate(8deg) scale(0.8);
+}
+
+.comic-tab-btn:hover .comic-tab-hover-fx {
+  opacity: 1;
+  transform: rotate(8deg) scale(1);
+}
+
+/* Nav actions */
+.comic-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.comic-cta-summon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FF3344;
+  color: #FFFFFF;
+  border: 3px solid #11141A;
+  box-shadow: 4px 4px 0px #11141A;
+  padding: 10px 18px;
+  font-family: var(--font-comic);
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  border-radius: 6px;
+  transform: rotate(-1deg);
+  transition: all 0.12s ease;
+  user-select: none;
+}
+
+.comic-cta-summon:hover {
+  transform: translate(-2px, -2px) rotate(1deg);
+  box-shadow: 6px 6px 0px #11141A;
+  background: #FF1A30;
+}
+
+.comic-cta-summon:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #11141A;
+}
+
+.cta-lightning {
+  color: #FFDE00;
+  font-size: 1.3rem;
+  animation: comic-pulse 1s infinite alternate;
+}
+
+.comic-mobile-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFDE00;
+  border: 2.5px solid #11141A;
+  box-shadow: 3px 3px 0px #11141A;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (min-width: 860px) {
+  .comic-mobile-toggle {
+    display: none;
+  }
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.menu-label {
+  font-family: var(--font-comic);
+  font-size: 0.7rem;
+}
+
+/* Temporary floating SFX animation badge */
+.floating-sfx-popup {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-6deg);
+  background: #FFE500;
+  color: #11141A;
+  font-family: var(--font-comic);
+  font-size: 2rem;
+  padding: 6px 20px;
+  border: 3.5px solid #11141A;
+  box-shadow: 5px 5px 0px #FF3344;
+  animation: comic-pop 0.6s ease-out forwards;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Mobile drawer */
+.comic-mobile-drawer {
+  margin-top: 10px;
+}
+
+.mobile-bubble {
+  background: #FFFBE6;
+}
+
+.mobile-bubble-title {
+  font-family: var(--font-comic);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: #11141A;
+}
+
+.mobile-links-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.mobile-item {
+  justify-content: flex-start;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 10px 16px;
+}
+
+.mobile-item span {
+  color: #FF3344;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 0.8rem;
+  margin-right: 8px;
+}
