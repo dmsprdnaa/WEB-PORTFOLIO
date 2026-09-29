@@ -102,14 +102,14 @@ export default function Home() {
             categoryFilter={selectedCategory}
           />
         </div>
-
-        {/* Footer Section Spatial Full-Width */}
-        <SpatialFooter
-          onScrollToTop={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          onScrollToCatalog={scrollToCatalog}
-          onOpenContact={scrollToProfile}
-        />
       </main>
+
+      {/* Footer Section Spatial Full-Width */}
+      <SpatialFooter
+        onScrollToTop={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onScrollToCatalog={scrollToCatalog}
+        onOpenContact={scrollToProfile}
+      />
 
       {/* Modal Interaktif Proyek & Profil */}
       <ProjectModal 
