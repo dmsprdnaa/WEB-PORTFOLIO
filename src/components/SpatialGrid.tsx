@@ -297,7 +297,7 @@ export default function SpatialGrid({
       sectionType: "client",
       description:
         "Sistem company profile industri dan portal operasional gudang PT. Aksara Megah Abadi dengan arsitektur multi-role: Administrator dan Pegawai Lapangan.",
-      image: "/demos/client/web-ptaksara/Landing Page/mesin.jpg",
+      image: "/webptaksara.png",
       liveUrl: "/demos/client/web-ptaksara/index.html",
       githubUrl: "https://github.com",
     },
@@ -316,6 +316,23 @@ export default function SpatialGrid({
         "Penjadwal tugas terdistribusi otomatis yang mengorkestrasi alur kerja ETL latar belakang di seluruh kluster Kubernetes tanpa downtime.",
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop",
       liveUrl: "https://github.com",
+    },
+    {
+      id: "kkn-kertasari-2026",
+      caseNumber: "CASE #004",
+      title: "KKN Kertasari 2026: Portal Pengabdian Desa",
+      suspectArchitect: "Dimas Putra",
+      category: "Full-Stack",
+      tags: ["Next.js 15", "Tailwind CSS", "Supabase", "KKN"],
+      clues: ["Next.js 15", "Supabase Storage", "UBP Karawang"],
+      status: "SOLVED",
+      rotationDeg: 1.5,
+      sectionType: "client",
+      description:
+        "Website resmi KKN Desa Kertasari oleh mahasiswa UBP Karawang 2026. Menampilkan profil tim, program kerja, galeri kegiatan, dan portal edukasi UMKM digital berbasis Next.js dan Supabase.",
+      image: "/webkkn.png",
+      liveUrl: "https://kknkertasari.web.id/",
+      githubUrl: "https://github.com",
     },
   ];
 

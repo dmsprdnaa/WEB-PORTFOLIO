@@ -8,6 +8,7 @@ import SpatialGrid from "@/components/SpatialGrid";
 import SpatialFooter from "@/components/SpatialFooter";
 import ProjectModal from "@/components/ProjectModal";
 import DetectiveProfileDossier from "@/components/DetectiveProfileDossier";
+import DevBannerToast from "@/components/DevBannerToast";
 import "@/components/spatial.css";
 
 export default function Home() {
@@ -115,6 +116,9 @@ export default function Home() {
         project={selectedProject} 
         onClose={() => setSelectedProject(null)} 
       />
+
+      {/* Dev Banner Toast — muncul sekali per session */}
+      <DevBannerToast />
     </div>
   );
 }
