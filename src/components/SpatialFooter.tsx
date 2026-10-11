@@ -146,7 +146,7 @@ export default function SpatialFooter({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/fotoprofile.jpeg"
-                alt="Dimas Putra"
+                alt="Dimas Putra Perdana"
                 className="agent-footer-avatar"
               />
               <span className="agent-live-pip"></span>

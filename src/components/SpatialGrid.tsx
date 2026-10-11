@@ -461,7 +461,7 @@ export default function SpatialGrid({
             isLab={false}
             originId="master-origin-pin-client"
             originLabel="ORIGIN // LEAD ARCHITECT"
-            originName="DIMAS PUTRA"
+            originName="DIMAS PUTRA PERDANA"
             originRole="CLIENT SOLUTION BUILDER"
             onSelectProject={onSelectProject}
           />

@@ -58,7 +58,7 @@ export default function SpatialIntroHero({
         </h1>
 
         <p className="hero-bio-paragraph">
-          Hai, saya <strong>Dimas Putra</strong> — menjembatani kesenjangan antara antarmuka glassmorphism sinematik
+          Hai, saya <strong>Dimas Putra Perdana</strong> menjembatani kesenjangan antara antarmuka glassmorphism sinematik
           dan arsitektur backend yang kokoh. Berspesialisasi dalam <strong>Next.js 15</strong>, <strong>React 19</strong>,
           <strong> TypeScript</strong>, dan layanan mikro terdistribusi dengan latensi sangat rendah.
         </p>

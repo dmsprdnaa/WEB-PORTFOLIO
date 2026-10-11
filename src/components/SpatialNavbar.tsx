@@ -65,7 +65,7 @@ export default function SpatialNavbar({
           </div>
           <div className="brand-meta-info">
             <div className="brand-title-line">
-              <span className="brand-agent-name">DIMAS PUTRA</span>
+              <span className="brand-agent-name">DIMAS PUTRA PERDANA</span>
               <span className="brand-confidential-tag">CONFIDENTIAL</span>
             </div>
             <div className="brand-status-row">
