@@ -22,6 +22,7 @@ import {
   IconBrandDatabase,
   IconBrandGit,
   IconLayers,
+  IconHandClick,
 } from "./Icons";
 
 interface DetectiveProfileDossierProps {
@@ -292,7 +293,9 @@ export default function DetectiveProfileDossier({
 
                 {/* Tombol Interaktif 'Pick up ID card' persis seperti di gambar referensi */}
                 <div className="pick-id-card-prompt">
-                  <span className="pick-hand-icon">👆</span>
+                  <span className="pick-hand-icon">
+                    <IconHandClick size={13} />
+                  </span>
                   <span className="pick-card-text">
                     {pickedIdCard ? "Put down ID card" : "Pick up ID card"}
                   </span>

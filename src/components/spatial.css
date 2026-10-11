@@ -1997,10 +1997,134 @@
   color: var(--text-secondary);
 }
 
+/* Quick Profile & Availability Widget */
+.hero-quick-profile-widget {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  padding: 16px 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-quick-profile-widget:hover {
+  border-color: var(--border-active);
+  box-shadow: var(--shadow-md);
+}
+
+.qp-widget-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.qp-widget-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 6px rgba(6, 182, 212, 0.5);
+  animation: qp-dot-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes qp-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.qp-widget-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+}
+
+.qp-widget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.qp-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--bg-input);
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.qp-item:hover {
+  border-color: var(--border-default);
+  background: var(--bg-elevated);
+  transform: translateY(-1px);
+}
+
+.qp-item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.qp-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.qp-item-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.qp-item-value {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* Side-by-side layout: About Me + Quick Profile */
+.hero-about-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
 .hero-main-copy {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-quick-profile-widget {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.qp-widget-grid {
+  grid-template-columns: 1fr;
 }
 
 .hero-display-title {
@@ -2023,6 +2147,7 @@
   color: var(--text-secondary);
   line-height: 1.6;
   max-width: 780px;
+  text-align: justify;
 }
 
 .hero-bio-paragraph strong {
@@ -3292,6 +3417,35 @@
   .role-badge-pill {
     font-size: 0.72rem;
     padding: 5px 10px;
+  }
+
+  .hero-about-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hero-quick-profile-widget {
+    padding: 14px 16px;
+    width: 100%;
+  }
+
+  .qp-widget-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .qp-item {
+    padding: 8px 10px;
+  }
+
+  .qp-item-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+  }
+
+  .qp-item-value {
+    font-size: 0.78rem;
   }
 
   .hero-display-title {
@@ -4825,7 +4979,10 @@
 }
 
 .pick-hand-icon {
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 /* Memorandum Body (Monospace Typewriter & Redacted Bars) */

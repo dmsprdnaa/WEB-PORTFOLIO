@@ -389,4 +389,31 @@ export const IconLayers = ({ size = 20, className = "", color = "currentColor" }
   </svg>
 );
 
+export const IconHandClick = ({ size = 16, className = "", color = "currentColor" }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5" />
+    <path d="M11 10.5v-1a1.5 1.5 0 0 1 3 0v2" />
+    <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />
+    <path d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-2a6 6 0 0 1-4.24-1.76l-3.6-3.6a1.5 1.5 0 0 1 2.12-2.12L8 16" />
+  </svg>
+);
 
+export const IconMapPin = ({ size = 16, className = "", color = "currentColor" }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
+
+export const IconClock = ({ size = 16, className = "", color = "currentColor" }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+export const IconZap = ({ size = 16, className = "", color = "currentColor" }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
